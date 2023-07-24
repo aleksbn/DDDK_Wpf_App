@@ -1,0 +1,31 @@
+﻿<Window x:Class="DDDK_Wpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DDDK_Wpf"
+        mc:Ignorable="d"
+        Title="MainWindow"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanMinimize"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"
+        Height="{x:Static SystemParameters.MaximizedPrimaryScreenHeight}"
+        Width="{x:Static SystemParameters.MaximizedPrimaryScreenWidth}">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0">
+            <Label Content="Select one of the options:" HorizontalContentAlignment="Center" FontSize="25" FontStyle="Italic"/>
+            <ListBox Name="lbOptions" SelectionChanged="lbOptions_SelectionChanged"/>
+            <StackPanel Margin="25">
+                <Button Name="btnLogout" Margin="20" Content="Logout" FontSize="25" FontStyle="Italic" FontWeight="Bold" Click="btnLogout_Click"/>
+                <Button Name="btnClose" Margin="20" Content="Close" FontSize="25" FontStyle="Italic" FontWeight="Bold" Click="btnClose_Click"/>
+            </StackPanel>
+        </StackPanel>
+        <Frame Name="MainWindowFrame" Grid.Column="1">
+            
+        </Frame>
+    </Grid>
+</Window>
