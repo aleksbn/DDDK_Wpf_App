@@ -39,4 +39,29 @@ namespace DDDK_Wpf.DTOs
     {
 
     }
+
+    public class DonatorSearchDTO
+    {
+        public int id { get; set; }
+        public string firstName { get; set; }
+        public string lastName { get; set; }
+        public string email { get; set; }
+        public string phoneNumber { get; set; }
+        public string bloodType { get; set; }
+        public string lastDonationDate { get; set; }
+        public int totalDonations { get; set; }
+        public string fullName { get; set; }
+
+        public override string ToString()
+        {
+            return id.ToString() + " - " + firstName + " " + lastName;
+        }
+    }
+
+    public class DonatorFromEventDTO
+    {
+        public int id { get; set; }
+        public string fullName { get; set; }
+        public bool didDonate { get; set; }
+    }
 }

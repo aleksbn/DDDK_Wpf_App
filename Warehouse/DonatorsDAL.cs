@@ -42,7 +42,7 @@ namespace DDDK_Wpf.Warehouse
                 
                 if (response.IsSuccessStatusCode)
                 {
-                    return "Done";
+                    return "Done-" + JsonSerializer.Deserialize<int>(await response.Content.ReadAsStringAsync());
                 }
                 else
                 {

@@ -95,6 +95,7 @@ namespace DDDK_Wpf.Pages
                 btnEdit.IsEnabled = true;
                 btnDelete.IsEnabled = true;
                 tbResStatus.Text = "";
+                ToggleLock(false);
             }
         }
 
@@ -160,12 +161,12 @@ namespace DDDK_Wpf.Pages
                         donatorId = ((DonatorDTO)cbDonators.SelectedItem).id
                     };
                     var result = await DonationsDAL.EditDonation(donation, int.Parse(tbId.Text), _store);
-                    int selectedIndex = lbDonations.SelectedIndex;
+                    
                     if (result == "Done")
                     {
                         ToggleLock(false);
                         await ForceReload();
-                        lbDonations.SelectedIndex = selectedIndex;
+                        lbDonations.SelectedItem = _store.Donations.First(d => d.id == int.Parse(tbId.Text));
                         tbResStatus.Text = "Donation edited!";
                         btnDelete.IsEnabled = true;
                         btnEdit.IsEnabled = true;

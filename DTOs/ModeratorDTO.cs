@@ -12,7 +12,7 @@ namespace DDDK_Wpf.DTOs
         public string Email { get; set; }
     }
 
-    public class RegisterDTO : LoginDTO
+    public class RegisterUserDTO : LoginDTO
     {
         [Required]
         public string Role { get; set; }
@@ -24,16 +24,23 @@ namespace DDDK_Wpf.DTOs
         public string EmailConfirmation { get; set; }
     }
 
-    public class UpdateModeratorDTO : RegisterDTO
+    public class UpdateUserDTO : RegisterUserDTO
     {
         [Required]
         [EmailAddress]
         public string OldEmail { get; set; }
     }
 
-    public class User : LoginDTO
+    public class UserDTO
     {
+        public string id { get; set; }
+        public string email { get; set; }
+        public string role { get; set; }
 
+        public override string ToString()
+        {
+            return email + " - " + role;
+        }
     }
 
     public class LoginResponseDTO

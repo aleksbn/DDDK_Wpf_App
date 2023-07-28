@@ -26,4 +26,10 @@ namespace DDDK_Wpf.DTOs
     {
 
     }
+
+    public class DonationSearchDTO
+    {
+        public string donationDate { get; set; }
+        public string location { get; set; }
+    }
 }

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -27,6 +28,8 @@ namespace DDDK_Wpf.Pages
     {
         private Store _store;
         private string mode = "new";
+        private List<DonatorFromEventDTO> donators = new List<DonatorFromEventDTO>();
+        bool justEdited = true;
 
         public DonationEventsPage(Store store)
         {
@@ -40,10 +43,23 @@ namespace DDDK_Wpf.Pages
             cbLocations.IsEnabled = value;
             tbDate.IsEnabled = value;
             tbDescription.IsEnabled = value;
+            dgDonators.IsEnabled = value;
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            await DonatorsDAL.GetDonators(_store);
+            foreach (var donator in _store.Donators)
+            {
+                donators.Add(new DonatorFromEventDTO()
+                {
+                    id = donator.id,
+                    fullName = donator.firstName + " " + donator.lastName,
+                    didDonate = false
+                });
+            }
+            dgDonators.ItemsSource = donators;
+
             if(_store.Locations == null)
             {
                 await LocationsDAL.GetLocations(_store);
@@ -77,7 +93,7 @@ namespace DDDK_Wpf.Pages
 
         }
 
-        private void lbDonationEvents_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void lbDonationEvents_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if(lbDonationEvents.SelectedIndex > -1) 
             {
@@ -90,6 +106,28 @@ namespace DDDK_Wpf.Pages
                 btnEdit.IsEnabled = true;
                 btnDelete.IsEnabled = true;
                 tbResStatus.Text = "";
+                ToggleLock(false);
+                
+                if(justEdited)
+                {
+                    await DonationsDAL.GetDonations(_store);
+                    justEdited = false;
+                }
+
+                foreach (var item in donators)
+                {
+                    if(_store.Donations.Any(d => d.donatorId == item.id && d.donationEventId == donationEvent.id))
+                    {
+                        item.didDonate = true;
+                    }
+                    else
+                    {
+                        item.didDonate = false;
+                    }
+                }
+
+                dgDonators.ItemsSource = null;
+                dgDonators.ItemsSource = donators;
             }
         }
 
@@ -105,6 +143,13 @@ namespace DDDK_Wpf.Pages
             mode = "new";
             tbResStatus.Text = "";
             cbLocations.SelectedIndex = 0;
+            
+            foreach (var item in donators)
+            {
+                item.didDonate = false;
+            }
+            dgDonators.ItemsSource = null;
+            dgDonators.ItemsSource = donators;
         }
 
         private void ClearForm()
@@ -139,11 +184,29 @@ namespace DDDK_Wpf.Pages
                     {
                         ToggleLock(false);
                         await ForceReload();
-                        lbDonationEvents.SelectedIndex = lbDonationEvents.Items.Count - 1;
+                        var donationEvent = _store.DonationEvents.OrderByDescending(de => de.id).ToList()[0];
                         tbResStatus.Text = "Donation event has been added!";
+
+                        List<CreateDonationDTO> donationsToSend = new List<CreateDonationDTO>();
+                        foreach (var item in dgDonators.Items)
+                        {
+                            var donator = (DonatorFromEventDTO)item;
+                            if (donator.didDonate)
+                            {
+                                donationsToSend.Add(new CreateDonationDTO()
+                                {
+                                    donationEventId = donationEvent.id,
+                                    donatorId = donator.id
+                                });
+                            }
+                        }
+                        await DonationsDAL.AddDonationRange(donationsToSend, _store);
+                        justEdited = true;
+                        lbDonationEvents.SelectedItem = donationEvent;
                         btnDelete.IsEnabled = true;
                         btnEdit.IsEnabled = true;
                         btnSave.IsEnabled = false;
+                        dgDonators.IsEnabled = false;
                     }
                     else
                     {
@@ -165,12 +228,33 @@ namespace DDDK_Wpf.Pages
                     if (result == "Done")
                     {
                         ToggleLock(false);
+                        int index = lbDonationEvents.SelectedIndex;
+                        var donationEvent = (DonationEventDTO)lbDonationEvents.SelectedItem;
+                        await DonationsDAL.DeleteDonationRange(donationEvent.id, _store);
+
+                        List<CreateDonationDTO> donationsToSend = new List<CreateDonationDTO>();
+                        foreach (var item in dgDonators.Items)
+                        {
+                            var donator = (DonatorFromEventDTO)item;
+                            if (donator.didDonate)
+                            {
+                                donationsToSend.Add(new CreateDonationDTO()
+                                {
+                                    donationEventId = donationEvent.id,
+                                    donatorId = donator.id
+                                });
+                            }
+                        }
+                        await DonationsDAL.AddDonationRange(donationsToSend, _store);
+                        justEdited = true;
+
                         await ForceReload();
-                        lbDonationEvents.SelectedIndex = lbDonationEvents.Items.Count - 1;
-                        tbResStatus.Text = "Donation event has been edited!";
+                        lbDonationEvents.SelectedIndex = index;
                         btnDelete.IsEnabled = true;
                         btnEdit.IsEnabled = true;
                         btnSave.IsEnabled = false;
+                        dgDonators.IsEnabled = false;
+                        tbResStatus.Text = "Donation event has been edited!";
                     }
                     else
                     {

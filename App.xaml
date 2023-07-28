@@ -25,9 +25,14 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <Style TargetType="TextBlock">
-            <Setter Property="FontSize" Value="20"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
+        <Style TargetType="Button">
+            <Setter Property="FontSize" Value="25"/>
+        </Style>
+        <Style TargetType="DataGridRow">
+            <Setter Property="FontSize" Value="15"/>
+        </Style>
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="FontSize" Value="15"/>
         </Style>
     </Application.Resources>
 </Application>

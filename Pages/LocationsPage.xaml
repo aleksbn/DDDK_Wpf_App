@@ -52,7 +52,7 @@
                 <TextBlock Text="Name" Grid.Row="1" Grid.Column="0"/>
                 <TextBox Name="tbName" Grid.Row="1" Grid.Column="1"/>
                 <TextBlock Text="Description" Grid.Row="2" Grid.Column="0"/>
-                <TextBox Name="tbDescription" Grid.Row="2" Grid.Column="1"/>
+                <TextBox Name="tbDescription" VerticalContentAlignment="Top" Grid.Row="2" Grid.Column="1"  Grid.RowSpan="2" AcceptsReturn="True" TextWrapping="Wrap"/>
                 <TextBlock Name="tbResStatus" Grid.Row="10" Grid.Column="0"/>
             </Grid>
             <Grid Grid.Row="1">

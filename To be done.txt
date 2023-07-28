@@ -1,0 +1,16 @@
+Search page
+	by donating posibilites (blood type, date)	DONE
+	by user						DONE
+	by donation event				DONE
+
+Prepraviti pretrage za lowercase			DONE
+
+Pamcenje selektovanog itema nakon dodavanja		DONE
+
+Add donation event page					DONE
+
+PasswordBox i TextBlock za description			DONE
+
+Style
+
+Code cleanup

@@ -92,5 +92,43 @@ namespace DDDK_Wpf.Warehouse
                 }
             }
         }
+
+        public async static Task<string> AddDonationRange(List<CreateDonationDTO> donationsToSend, Store store)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", store.Token);
+                var data = JsonSerializer.Serialize(donationsToSend);
+                HttpContent content = new StringContent(data, Encoding.UTF8, "application/json");
+                var response = await client.PostAsync("https://localhost:7056/api/Donation/addmultiple", content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return "Done";
+                }
+                else
+                {
+                    return await response.Content.ReadAsStringAsync();
+                }
+            }
+        }
+
+        public async static Task<string> DeleteDonationRange(int id, Store store)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", store.Token);
+                var response = await client.DeleteAsync("https://localhost:7056/api/Donation/deletemultiple?id=" + id);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return "Done";
+                }
+                else
+                {
+                    return await response.Content.ReadAsStringAsync();
+                }
+            }
+        }
     }
 }

@@ -12,11 +12,12 @@ namespace DDDK_Wpf
     {
         private readonly Store store;
         ObservableCollection<string> AvailableOptions { get; set; }
-        public ModeratorsPage ModPage;
+        public UsersPage UsersPage;
         public DonatorsPage DonatorsPage;
         public DonationsPage DonationsPage;
         public DonationEventsPage DonationEventsPage;
         public LocationsPage LocationsPage;
+        public SearchPage SearchPage;
 
         public MainWindow(Store store)
         {
@@ -24,13 +25,13 @@ namespace DDDK_Wpf
             AvailableOptions = new ObservableCollection<string>();
             if (store.Role == "Admin")
             {
-                AvailableOptions.Add("Moderators");
+                AvailableOptions.Add("Users");
             }
             AvailableOptions.Add("Donators");
             AvailableOptions.Add("Donation Events");
             AvailableOptions.Add("Donations");
             AvailableOptions.Add("Locations");
-            AvailableOptions.Add("Statistics");
+            AvailableOptions.Add("Searches");
             InitializeComponent();
             lbOptions.ItemsSource = AvailableOptions;
         }
@@ -55,12 +56,12 @@ namespace DDDK_Wpf
             var selectedOption = lbOptions.SelectedItem.ToString();
             switch (selectedOption)
             {
-                case "Moderators": ModPage = new ModeratorsPage(); MainWindowFrame.Content = ModPage; break;
+                case "Users": UsersPage = new UsersPage(store); MainWindowFrame.Content = UsersPage; break;
                 case "Donators": DonatorsPage = new DonatorsPage(store); MainWindowFrame.Content = DonatorsPage; break;
                 case "Donation Events": DonationEventsPage = new DonationEventsPage(store); MainWindowFrame.Content = DonationEventsPage; break;
                 case "Donations": DonationsPage = new DonationsPage(store); MainWindowFrame.Content = DonationsPage; break;
                 case "Locations": LocationsPage = new LocationsPage(store); MainWindowFrame.Content = LocationsPage; break;
-                case "Statistics": MainWindowFrame.Content = ModPage; break;
+                case "Searches": SearchPage = new SearchPage(store); MainWindowFrame.Content = SearchPage; break;
                 default: break;
             }
         }

@@ -5,7 +5,7 @@ namespace DDDK_Wpf
 {
     public class Store
     {
-        public ObservableCollection<User> Users { get; set; } = null;
+        public ObservableCollection<UserDTO> Users { get; set; } = null;
         public ObservableCollection<LocationDTO> Locations { get; set; } = null;
         public ObservableCollection<DonatorDTO> Donators { get; set; } = null;
         public ObservableCollection<DonationEventDTO> DonationEvents { get; set; } = null;

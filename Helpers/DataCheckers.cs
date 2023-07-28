@@ -24,5 +24,10 @@ namespace DDDK_Wpf.Helpers
         {
             return DateTime.TryParseExact(text, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out _);
         }
+
+        public static bool IsPassword(string password)
+        {
+            return Regex.IsMatch(password, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$");
+        }
     }
 }

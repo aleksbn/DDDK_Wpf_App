@@ -88,6 +88,7 @@ namespace DDDK_Wpf.Pages
                 btnEdit.IsEnabled = true;
                 btnDelete.IsEnabled = true;
                 tbResStatus.Text = "";
+                ToggleLock(false);
             }
         }
 
@@ -142,11 +143,11 @@ namespace DDDK_Wpf.Pages
                     };
 
                     var result = await DonatorsDAL.AddDonator(donator, _store);
-                    if (result == "Done")
+                    if (result.Contains("Done"))
                         {
                             ToggleLock(false);
                             await ForceReload();
-                            lbDonators.SelectedIndex = lbDonators.Items.Count - 1;
+                            lbDonators.SelectedItem = lbDonators.Items[lbDonators.Items.IndexOf(lbDonators.Items.Cast<DonatorDTO>().FirstOrDefault(d => d.id == int.Parse(result.Split("-")[1])))];
                             tbResStatus.Text = "Donator has been added!";
                             btnDelete.IsEnabled = true;
                             btnEdit.IsEnabled = true;

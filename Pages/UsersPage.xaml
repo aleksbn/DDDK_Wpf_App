@@ -1,12 +1,12 @@
-﻿<Page x:Class="DDDK_Wpf.Pages.DonationEventsPage"
+﻿<Page x:Class="DDDK_Wpf.Pages.UsersPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:DDDK_Wpf.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800" Margin="20"
-      Title="DonationEventsPage"
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="UsersPage"
       Loaded="Page_Loaded">
     <Page.Resources>
         <Style TargetType="TextBlock">
@@ -28,7 +28,7 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
-        <ListBox Name="lbDonationEvents" Grid.Column="0" SelectionChanged="lbDonationEvents_SelectionChanged"/>
+        <ListBox Name="lbUsers" Grid.Column="0" SelectionChanged="lbUsers_SelectionChanged"/>
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="5*"/>
@@ -37,7 +37,6 @@
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="2*"/>
                     <ColumnDefinition Width="2*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
@@ -54,24 +53,21 @@
                 </Grid.RowDefinitions>
                 <TextBlock Text="ID" Grid.Row="0" Grid.Column="0"/>
                 <TextBox Name="tbId" IsEnabled="False" Grid.Row="0" Grid.Column="1"/>
-                <TextBlock Text="Location" Grid.Row="1" Grid.Column="0"/>
-                <ComboBox Name="cbLocations" Grid.Row="1" Grid.Column="1" Margin="5" Padding="0">
+                <TextBlock Text="Role" Grid.Row="1" Grid.Column="0"/>
+                <ComboBox IsEnabled="False" Name="cbRoles" Grid.Row="1" Grid.Column="1" Margin="5">
                     <ComboBox.ItemContainerStyle>
                         <Style TargetType="ComboBoxItem" BasedOn="{StaticResource cbItemsStyle}"/>
                     </ComboBox.ItemContainerStyle>
                 </ComboBox>
-                <TextBlock Text="Date" Grid.Row="2" Grid.Column="0"/>
-                <TextBox Name="tbDate" Grid.Row="2" Grid.Column="1"/>
-                <TextBlock Text="Description" Grid.Row="3" Grid.Column="0"/>
-                <TextBox Name="tbDescription" Grid.Row="3" VerticalContentAlignment="Top" Grid.Column="1" Grid.RowSpan="2" AcceptsReturn="True" TextWrapping="Wrap"/>
-                <TextBlock Name="tbResStatus" Grid.Row="10" Grid.ColumnSpan="2" Grid.Column="0"/>
-                <DataGrid IsEnabled="False" Name="dgDonators" AutoGenerateColumns="False" Grid.Column="2" Grid.RowSpan="10" Margin="5">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="ID" Binding="{Binding id}"/>
-                        <DataGridTextColumn Header="Donator name" Binding="{Binding fullName}"/>
-                        <DataGridCheckBoxColumn Header="Did donate" Binding="{Binding didDonate}"/>
-                    </DataGrid.Columns>
-                </DataGrid>
+                <TextBlock Text="Email" Grid.Row="2" Grid.Column="0"/>
+                <TextBox Name="tbEmail" Grid.Row="2" Grid.Column="1"/>
+                <TextBlock Name="tblEmailConfirm" Text="Email confirmation" Visibility="Hidden" Grid.Row="3" Grid.Column="0"/>
+                <TextBox Name="tbEmailConfirm" Visibility="Hidden" Grid.Row="3" Grid.Column="1"/>
+                <TextBlock Name="tblPassword" Text="Password" Visibility="Hidden" Grid.Row="4" Grid.Column="0"/>
+                <PasswordBox Name="tbPassword" Visibility="Hidden" Grid.Row="4" Grid.Column="1"/>
+                <TextBlock Name="tblPasswordConfirm" Text="Password Confirmation" Visibility="Hidden" Grid.Row="5" Grid.Column="0"/>
+                <PasswordBox Name="tbPasswordConfirm" Visibility="Hidden" Grid.Row="5" Grid.Column="1"/>
+                <TextBlock Name="tbResStatus" Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="2"/>
             </Grid>
             <Grid Grid.Row="1">
                 <WrapPanel Name="wp">

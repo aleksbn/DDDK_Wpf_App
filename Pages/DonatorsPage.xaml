@@ -22,6 +22,9 @@
         <Style x:Key="cbItemsStyle" TargetType="ComboBoxItem">
             <Setter Property="FontSize" Value="25"/>
         </Style>
+        <Style x:Key="btnStyle" TargetType="Button">
+            <Setter Property="FontSize" Value="25"/>
+        </Style>
     </Page.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
