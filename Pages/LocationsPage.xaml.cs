@@ -29,7 +29,6 @@ namespace DDDK_Wpf.Pages
             }
             
             lbLocations.ItemsSource = _store.Locations;
-            lbLocations.SelectedIndex = 0;
             
             if(_store.Locations == null)
             {

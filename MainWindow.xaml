@@ -5,12 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DDDK_Wpf"
         mc:Ignorable="d"
-        Title="MainWindow"
+        Icon="/Resources/blood-drop.ico"
+        Title="DDDK aplikacija"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanMinimize"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
         Height="{x:Static SystemParameters.MaximizedPrimaryScreenHeight}"
-        Width="{x:Static SystemParameters.MaximizedPrimaryScreenWidth}">
+        Width="{x:Static SystemParameters.MaximizedPrimaryScreenWidth}"
+        >
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -24,7 +26,7 @@
                 <Button Name="btnClose" Margin="20" Content="Close" FontSize="25" FontStyle="Italic" FontWeight="Bold" Click="btnClose_Click"/>
             </StackPanel>
         </StackPanel>
-        <Frame Name="MainWindowFrame" Grid.Column="1">
+        <Frame Name="MainWindowFrame" Grid.Column="1" NavigationUIVisibility="Hidden">
             
         </Frame>
     </Grid>

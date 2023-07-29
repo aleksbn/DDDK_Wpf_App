@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DDDK_Wpf.DTOs
+﻿namespace DDDK_Wpf.DTOs
 {
     internal class RoleDTO
     {

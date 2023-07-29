@@ -11,6 +11,8 @@ Add donation event page					DONE
 
 PasswordBox i TextBlock za description			DONE
 
-Style
+Add JWT to a client side
 
-Code cleanup
+Style							DONE
+
+Code cleanup						DONE

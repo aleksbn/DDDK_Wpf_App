@@ -5,10 +5,14 @@
              StartupUri="LoginWindow.xaml">
     <Application.Resources>
         <Style TargetType="ListBoxItem">
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="Gray" />
+            <Setter Property="Background" Value="White" />
+            <Setter Property="Padding" Value="5" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ListBoxItem">
-                        <Border x:Name="Border">
+                        <Border x:Name="Border" CornerRadius="15">
                             <TextBlock FontSize="15" Padding="10" Text="{Binding}"/>
                         </Border>
                         <ControlTemplate.Triggers>
@@ -27,6 +31,7 @@
         </Style>
         <Style TargetType="Button">
             <Setter Property="FontSize" Value="25"/>
+            <Setter Property="BorderBrush" Value="Azure"/>
         </Style>
         <Style TargetType="DataGridRow">
             <Setter Property="FontSize" Value="15"/>

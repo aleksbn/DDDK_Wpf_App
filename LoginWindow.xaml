@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DDDK_Wpf"
         mc:Ignorable="d"
-        Title="LoginWindow" Height="350" Width="350"
+        Title="Welcome!" Height="350" Width="350"
         WindowStartupLocation="CenterScreen"
+        Icon="/Resources/blood-drop.ico"
         ResizeMode="NoResize">
     <StackPanel>
         <TextBlock Text="Email" FontSize="25" TextAlignment="Center" FontWeight="Bold" FontStyle="Italic"/>
