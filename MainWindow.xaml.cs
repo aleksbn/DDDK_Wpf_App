@@ -2,6 +2,11 @@
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Timers;
+using System.Text.Json;
+using DDDK_Wpf.DTOs;
+using DDDK_Wpf.Warehouse;
+using System.ComponentModel;
 
 namespace DDDK_Wpf
 {
@@ -18,9 +23,11 @@ namespace DDDK_Wpf
         public DonationEventsPage DonationEventsPage;
         public LocationsPage LocationsPage;
         public SearchPage SearchPage;
+        private static Timer timer;
 
         public MainWindow(Store store)
         {
+            Closing += MainWindow_Closing;
             this.store = store;
             AvailableOptions = new ObservableCollection<string>();
             if (store.Role == "Admin")
@@ -34,6 +41,25 @@ namespace DDDK_Wpf
             AvailableOptions.Add("Searches");
             InitializeComponent();
             lbOptions.ItemsSource = AvailableOptions;
+            StartTheTimer();
+        }
+
+        private void StartTheTimer()
+        {
+            timer = new Timer(600000);
+            timer.Elapsed += resendCredentials;
+            timer.AutoReset = true;
+            timer.Start();
+        }
+
+        private async void resendCredentials(object? sender, ElapsedEventArgs e)
+        {
+            var response = await UsersDAL.Login(store.Username, store.Password);
+            var result = JsonSerializer.Deserialize<LoginResponseDTO>(response);
+            if (result != null)
+            {
+                store.Token = result.token;
+            }
         }
 
         private void btnLogout_Click(object sender, RoutedEventArgs e)
@@ -45,7 +71,7 @@ namespace DDDK_Wpf
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
-            if(MessageBox.Show("Do you really want to leave the app?", "Alert!", MessageBoxButton.YesNo)  == MessageBoxResult.Yes)
+            if (MessageBox.Show("Do you really want to leave the app?", "Alert!", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 Close();
             }
@@ -63,6 +89,14 @@ namespace DDDK_Wpf
                 case "Locations": LocationsPage = new LocationsPage(store); MainWindowFrame.Content = LocationsPage; break;
                 case "Searches": SearchPage = new SearchPage(store); MainWindowFrame.Content = SearchPage; break;
                 default: break;
+            }
+        }
+
+        private static void MainWindow_Closing(object sender, CancelEventArgs e)
+        {
+            if (MessageBox.Show("Do you really want to leave the app?", "Alert!", MessageBoxButton.YesNo) == MessageBoxResult.No)
+            {
+                e.Cancel = true;
             }
         }
     }

@@ -1,4 +1,5 @@
 ﻿using DDDK_Wpf.DTOs;
+using DDDK_Wpf.Warehouse;
 using System;
 using System.Net.Http;
 using System.Text;
@@ -14,8 +15,6 @@ namespace DDDK_Wpf
     public partial class LoginWindow : Window
     {
         public Store store = new Store();
-        public string Token = "";
-        public string Role = "";
 
         public LoginWindow()
         {
@@ -28,28 +27,23 @@ namespace DDDK_Wpf
             this.store = store;
         }
 
-        private void ShowMainWindow()
-        {
-            store.Token = Token;
-            store.Role = Role;
-            MainWindow mainWindow = new MainWindow(store);
-            mainWindow.Show();
-            Close();
-        }
-
         private async void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            var response = await Login(tbUsername.Text, tbPassword.Password);
+            var response = await UsersDAL.Login(tbUsername.Text, tbPassword.Password);
             var result = JsonSerializer.Deserialize<LoginResponseDTO>(response);
             if (result != null)
             {
-                Token = result.token;
-                Role = result.role[0];
-                ShowMainWindow();
+                store.Token = result.token;
+                store.Role = result.role[0];
+                store.Username = tbUsername.Text;
+                store.Password = tbPassword.Password;
+                MainWindow mainWindow = new MainWindow(store);
+                mainWindow.Show();
+                Close();
             }
         }
 
-        private async Task<string> Login(string username, string password)
+        public async Task<string> Login(string username, string pass)
         {
             using (var client = new HttpClient())
             {
@@ -59,7 +53,7 @@ namespace DDDK_Wpf
                         JsonSerializer.Serialize(new
                         {
                             email = username,
-                            password = password
+                            password = pass
                         }),
                         Encoding.UTF8,
                         "application/json");

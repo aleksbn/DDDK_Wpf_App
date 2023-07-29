@@ -6,11 +6,37 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System;
 
 namespace DDDK_Wpf.Warehouse
 {
     internal static class UsersDAL
     {
+        public static async Task<string> Login(string username, string pass)
+        {
+            using (var client = new HttpClient())
+            {
+                Uri link = new Uri("https://localhost:7056/api/account/login");
+
+                using StringContent jsonContent = new(
+                        JsonSerializer.Serialize(new
+                        {
+                            email = username,
+                            password = pass
+                        }),
+                        Encoding.UTF8,
+                        "application/json");
+
+                using HttpResponseMessage response = await client.PostAsync(link, jsonContent);
+
+                var jsonresponse = await client.GetAsync(link);
+
+                response.EnsureSuccessStatusCode();
+
+                return await response.Content.ReadAsStringAsync();
+            }
+        }
+
         public async static Task<string> GetUsers(Store store)
         {
             using (HttpClient client = new HttpClient())
