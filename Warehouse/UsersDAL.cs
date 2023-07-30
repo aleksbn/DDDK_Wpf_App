@@ -7,6 +7,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System;
+using System.Windows;
 
 namespace DDDK_Wpf.Warehouse
 {
@@ -30,10 +31,17 @@ namespace DDDK_Wpf.Warehouse
                 using HttpResponseMessage response = await client.PostAsync(link, jsonContent);
 
                 var jsonresponse = await client.GetAsync(link);
+                try
+                {
+                    response.EnsureSuccessStatusCode();
 
-                response.EnsureSuccessStatusCode();
-
-                return await response.Content.ReadAsStringAsync();
+                    return await response.Content.ReadAsStringAsync();
+                }
+                catch (Exception x)
+                {
+                    MessageBox.Show("Wrong username or password!", "Bad login data", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return "Error";
+                }
             }
         }
 

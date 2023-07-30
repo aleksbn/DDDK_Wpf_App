@@ -129,7 +129,7 @@
                     </StackPanel>
                     <StackPanel Grid.Column="1">
                         <TextBlock Text="Location:"/>
-                        <TextBlock Name="tblLocation" FontWeight="Bold"/>
+                        <TextBlock Name="tblLocation" FontWeight="Bold" TextWrapping="Wrap"/>
                         <TextBlock Text="Date:"/>
                         <TextBlock Name="tblDate" FontWeight="Bold"/>
                         <TextBlock Text="No. of Donators:"/>

@@ -6,6 +6,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 
 namespace DDDK_Wpf
 {
@@ -27,9 +28,18 @@ namespace DDDK_Wpf
             this.store = store;
         }
 
-        private async void btnLogin_Click(object sender, RoutedEventArgs e)
+        private void btnLogin_Click(object sender, RoutedEventArgs e)
+        {
+            Login();
+        }
+
+        private async void Login()
         {
             var response = await UsersDAL.Login(tbUsername.Text, tbPassword.Password);
+            if (response == "Error")
+            {
+                return;
+            }
             var result = JsonSerializer.Deserialize<LoginResponseDTO>(response);
             if (result != null)
             {
@@ -65,6 +75,27 @@ namespace DDDK_Wpf
                 response.EnsureSuccessStatusCode();
 
                 return await response.Content.ReadAsStringAsync();
+            }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            tbUsername.Focus();
+        }
+
+        private void tbUsername_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Enter)
+            {
+                Login();
+            }
+        }
+
+        private void tbPassword_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                Login();
             }
         }
     }
