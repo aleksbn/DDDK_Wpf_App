@@ -115,7 +115,7 @@ namespace DDDK_Wpf.Warehouse
             using (HttpClient client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", store.Token);
-                var response = await client.DeleteAsync("https://localhost:7056/api/Donation/deletemultiple?id=" + id);
+                var response = await client.DeleteAsync("https://localhost:7056/api/Donation/deletemultiple/" + id);
 
                 if (response.IsSuccessStatusCode)
                 {
