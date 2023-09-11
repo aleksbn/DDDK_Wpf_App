@@ -1,9 +1,12 @@
 ﻿using DDDK_Wpf.DTOs;
 using DDDK_Wpf.Helpers;
 using DDDK_Wpf.Warehouse;
+using System.Diagnostics.Metrics;
+using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Xml.Linq;
 
 namespace DDDK_Wpf.Pages
 {
@@ -56,8 +59,6 @@ namespace DDDK_Wpf.Pages
         {
             await UsersDAL.GetUsers(_store);
             lbUsers.SelectedIndex = -1;
-            lbUsers.ItemsSource = null;
-            lbUsers.ItemsSource = _store.Users;
         }
 
         private void lbUsers_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -108,7 +109,7 @@ namespace DDDK_Wpf.Pages
 
         private async Task ChangeData()
         {
-            if (Validate())
+            if (ValidateInputs())
             {
                 if(mode == "new")
                 {
@@ -169,33 +170,12 @@ namespace DDDK_Wpf.Pages
                 }
             }
         }
-
-        private bool Validate()
+        private bool ValidateInputs()
         {
-            if(!DataCheckers.IsEmail(tbEmail.Text))
-            {
-                tbResStatus.Text = "You must enter a propper e-mail address.";
-                tbEmail.Focus();
-                return false;
-            }
-            if(tbEmail.Text != tbEmailConfirm.Text)
-            {
-                tbResStatus.Text = "Email and its confirmation must match.";
-                tbEmailConfirm.Focus();
-                return false;
-            }
-            if(!DataCheckers.IsPassword(tbPassword.Password))
-            {
-                tbResStatus.Text = "Password must contain 8 characters, uppercase, lowercase, special sign and a number.";
-                tbPassword.Focus();
-                return false;
-            }
-            if (tbPassword.Password != tbPasswordConfirm.Password)
-            {
-                tbResStatus.Text = "Password and its confirmation must match.";
-                tbPasswordConfirm.Focus();
-                return false;
-            }
+            if (ValidationHelper.ValidateElement(tbEmail, "You must enter a propper email address.", ValidationType.Email)) return false;
+            if (ValidationHelper.ValidateElement(tbEmailConfirm, "Email and its confirmation must match.", ValidationType.StringEquality, tbEmail.Text)) return false;
+            if (ValidationHelper.ValidateElement(tbPassword, "Password must contain 8 characters, uppercase, lowercase, special sign and a number.", ValidationType.Password)) return false;
+            if (ValidationHelper.ValidateElement(tbPasswordConfirm, "Password and its confirmation must match.", ValidationType.Password, tbPassword.Password)) return false;
             return true;
         }
 
@@ -208,6 +188,12 @@ namespace DDDK_Wpf.Pages
             btnEdit.IsEnabled = false;
             btnDelete.IsEnabled = false;
             tbResStatus.Text = "";
+            tbEmailConfirm.Text = " ";
+            tbPassword.Password = " ";
+            tbPasswordConfirm.Password = " ";
+            tbEmailConfirm.Clear();
+            tbPassword.Clear();
+            tbPasswordConfirm.Clear();
         }
 
         private async void btnDelete_Click(object sender, RoutedEventArgs e)

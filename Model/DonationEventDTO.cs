@@ -15,7 +15,7 @@ namespace DDDK_Wpf.DTOs
     public class DonationEventDTO : CreateDonationEventDTO
     {
         public int id { get; set; }
-        public string? locationName { get; set; }
+        public string locationName { get; set; }
 
         public override string ToString()
         {

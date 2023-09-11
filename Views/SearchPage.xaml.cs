@@ -77,6 +77,7 @@ namespace DDDK_Wpf.Pages
                     await BloodTypesDAL.GetBloodTypes(_store);
                 }
                 cbBloodTypes.ItemsSource = _store.BloodTypes;
+                cbBloodTypes.SelectedIndex = -1;
 
                 await DonatorsDAL.GetDonators(_store);
                 await DonationsDAL.GetDonations(_store);
@@ -88,7 +89,10 @@ namespace DDDK_Wpf.Pages
             }
             else
             {
-                await BloodTypesDAL.GetBloodTypes(_store);
+                if (_store.BloodTypes == null)
+                {
+                    await BloodTypesDAL.GetBloodTypes(_store);
+                }
                 dgDonors.ItemsSource = null;
                 dgDonors.ItemsSource = donatorSearchDTOs;
             }

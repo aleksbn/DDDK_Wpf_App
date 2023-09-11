@@ -4,11 +4,31 @@
              xmlns:local="clr-namespace:DDDK_Wpf"
              StartupUri="LoginWindow.xaml">
     <Application.Resources>
+        <Style TargetType="TextBlock" x:Key="pagesTextBlock">
+            <Setter Property="Margin" Value="25"/>
+            <Setter Property="FontSize" Value="25"/>
+        </Style>
+        <Style TargetType="TextBox" x:Key="pagesTextBox">
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="25"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+        <Style TargetType="ComboBoxItem" x:Key="cbItemsStyle">
+            <Setter Property="FontSize" Value="25"/>
+        </Style>
+        <Style TargetType="PasswordBox" x:Key="pagesPasswordBox">
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="25"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
         <Style TargetType="ListBoxItem">
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="BorderBrush" Value="Gray" />
             <Setter Property="Background" Value="White" />
             <Setter Property="Padding" Value="5" />
+            <Setter Property="Margin" Value="2" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ListBoxItem">
@@ -19,10 +39,12 @@
                             <Trigger Property="IsSelected" Value="True">
                                 <Setter TargetName="Border" Property="BorderThickness" Value="2"/>
                                 <Setter TargetName="Border" Property="BorderBrush" Value="Blue"/>
+                                <Setter Property="Margin" Value="0"/>
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Border" Property="BorderThickness" Value="1"/>
+                                <Setter TargetName="Border" Property="BorderThickness" Value="2"/>
                                 <Setter TargetName="Border" Property="BorderBrush" Value="Red"/>
+                                <Setter Property="Margin" Value="0"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -31,7 +53,7 @@
         </Style>
         <Style TargetType="Button">
             <Setter Property="FontSize" Value="25"/>
-            <Setter Property="BorderBrush" Value="Azure"/>
+            <Setter Property="Background" Value="AliceBlue"/>
         </Style>
         <Style TargetType="DataGridRow">
             <Setter Property="FontSize" Value="15"/>

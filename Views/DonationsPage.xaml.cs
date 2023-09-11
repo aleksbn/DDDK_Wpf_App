@@ -67,8 +67,6 @@ namespace DDDK_Wpf.Pages
         {
             await DonationsDAL.GetDonations(_store);
             lbDonations.SelectedIndex = -1;
-            lbDonations.ItemsSource = null;
-            lbDonations.ItemsSource = _store.Donations;
         }
 
         private void lbDonations_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -115,72 +113,54 @@ namespace DDDK_Wpf.Pages
 
         private async Task ChangeData()
         {
-            if (Validate())
+            if (mode == "new")
             {
-                if (mode == "new")
+                CreateDonationDTO donation = new CreateDonationDTO()
                 {
-                    CreateDonationDTO donation = new CreateDonationDTO()
-                    {
-                        donationEventId = ((DonationEventDTO)cbDonationEvents.SelectedItem).id,
-                        donatorId = ((DonatorDTO)cbDonators.SelectedItem).id
-                    };
+                    donationEventId = ((DonationEventDTO)cbDonationEvents.SelectedItem).id,
+                    donatorId = ((DonatorDTO)cbDonators.SelectedItem).id
+                };
 
-                    var result = await DonationsDAL.AddDonation(donation, _store);
-                    if (result.Contains("Done"))
-                    {
-                        ToggleLock(false);
-                        await ForceReload();
-                        lbDonations.SelectedItem = lbDonations.Items[lbDonations.Items.IndexOf(lbDonations.Items.Cast<DonationDTO>().FirstOrDefault(d => d.id == int.Parse(result.Split("-")[1])))];
-                        tbResStatus.Text = "Donation has been added!";
-                        btnDelete.IsEnabled = true;
-                        btnEdit.IsEnabled = true;
-                        btnSave.IsEnabled = false;
-                    }
-                    else
-                    {
-                        tbResStatus.Text = result;
-                    }
+                var result = await DonationsDAL.AddDonation(donation, _store);
+                if (result.Contains("Done"))
+                {
+                    ToggleLock(false);
+                    await ForceReload();
+                    lbDonations.SelectedItem = lbDonations.Items[lbDonations.Items.IndexOf(lbDonations.Items.Cast<DonationDTO>().FirstOrDefault(d => d.id == int.Parse(result.Split("-")[1])))];
+                    tbResStatus.Text = "Donation has been added!";
+                    btnDelete.IsEnabled = true;
+                    btnEdit.IsEnabled = true;
+                    btnSave.IsEnabled = false;
                 }
                 else
                 {
-                    UpdateDonationDTO donation = new UpdateDonationDTO()
-                    {
-                        donationEventId = ((DonationEventDTO)cbDonationEvents.SelectedItem).id,
-                        donatorId = ((DonatorDTO)cbDonators.SelectedItem).id
-                    };
-                    var result = await DonationsDAL.EditDonation(donation, int.Parse(tbId.Text), _store);
-                    
-                    if (result == "Done")
-                    {
-                        ToggleLock(false);
-                        await ForceReload();
-                        lbDonations.SelectedItem = _store.Donations.First(d => d.id == int.Parse(tbId.Text));
-                        tbResStatus.Text = "Donation edited!";
-                        btnDelete.IsEnabled = true;
-                        btnEdit.IsEnabled = true;
-                        btnSave.IsEnabled = false;
-                    }
-                    else
-                    {
-                        tbResStatus.Text = result;
-                    }
+                    tbResStatus.Text = result;
                 }
             }
-        }
-
-        private bool Validate()
-        {
-            if (cbDonationEvents.SelectedIndex == -1)
+            else
             {
-                MessageBox.Show("You must select donation event this donation is made in.", "Error in validation");
-                return false;
+                UpdateDonationDTO donation = new UpdateDonationDTO()
+                {
+                    donationEventId = ((DonationEventDTO)cbDonationEvents.SelectedItem).id,
+                    donatorId = ((DonatorDTO)cbDonators.SelectedItem).id
+                };
+                var result = await DonationsDAL.EditDonation(donation, int.Parse(tbId.Text), _store);
+                    
+                if (result == "Done")
+                {
+                    ToggleLock(false);
+                    await ForceReload();
+                    lbDonations.SelectedItem = _store.Donations.First(d => d.id == int.Parse(tbId.Text));
+                    tbResStatus.Text = "Donation edited!";
+                    btnDelete.IsEnabled = true;
+                    btnEdit.IsEnabled = true;
+                    btnSave.IsEnabled = false;
+                }
+                else
+                {
+                    tbResStatus.Text = result;
+                }
             }
-            if (cbDonators.SelectedIndex == -1)
-            {
-                MessageBox.Show("You must select donator that made the donation.", "Error in validation");
-                return false;
-            }
-            return true;
         }
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)

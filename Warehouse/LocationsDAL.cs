@@ -11,26 +11,6 @@ namespace DDDK_Wpf.Warehouse
 {
     internal static class LocationsDAL
     {
-        public static async Task<string> GetLocations(Store store)
-        {
-            using(HttpClient client = new HttpClient())
-            {
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", store.Token);
-                var result = await client.GetAsync("https://localhost:7056/api/Location/");
-                var json = await result.Content.ReadAsStringAsync();
-                var data = JsonSerializer.Deserialize<List<LocationDTO>>(json);
-                store.Locations = new ObservableCollection<LocationDTO>(data);
-                if(result.IsSuccessStatusCode)
-                {
-                    return "Done";
-                }
-                else
-                {
-                    return await result.Content.ReadAsStringAsync();
-                }
-            }
-        }
-
         public static async Task<string> AddLocation(CreateLocationDTO location, Store store)
         {
             using(HttpClient client = new HttpClient())
@@ -50,7 +30,25 @@ namespace DDDK_Wpf.Warehouse
                 }
             }
         }
-
+        public static async Task<string> GetLocations(Store store)
+        {
+            using(HttpClient client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", store.Token);
+                var result = await client.GetAsync("https://localhost:7056/api/Location/");
+                var json = await result.Content.ReadAsStringAsync();
+                var data = JsonSerializer.Deserialize<List<LocationDTO>>(json);
+                store.Locations = new ObservableCollection<LocationDTO>(data);
+                if(result.IsSuccessStatusCode)
+                {
+                    return "Done";
+                }
+                else
+                {
+                    return await result.Content.ReadAsStringAsync();
+                }
+            }
+        }
         public static async Task<string> EditLocation(UpdateLocationDTO location, int id, Store store)
         {
             using (HttpClient client = new HttpClient())
@@ -70,7 +68,6 @@ namespace DDDK_Wpf.Warehouse
                 }
             }
         }
-
         public static async Task<string> DeleteLocation(int id, Store store)
         {
             using (HttpClient client = new HttpClient())

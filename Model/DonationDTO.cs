@@ -14,7 +14,7 @@ namespace DDDK_Wpf.DTOs
     {
         [Required]
         public int id { get; set; }
-        public string? donatorFullName { get; set; }
+        public string donatorFullName { get; set; }
 
         public override string ToString()
         {

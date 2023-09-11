@@ -1,34 +1,22 @@
-﻿<Page x:Class="DDDK_Wpf.Pages.DonationsPage"
+﻿<Page x:Class="DDDK_Wpf.Pages.LocationsPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:DDDK_Wpf.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800" Margin="20"
-      Title="DonationsPage"
-      Loaded="Page_Loaded">
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Locations Page" Loaded="Page_Loaded" Margin="20">
     <Page.Resources>
-        <Style TargetType="TextBlock">
-            <Setter Property="Margin" Value="15"/>
-            <Setter Property="FontSize" Value="25"/>
-        </Style>
-        <Style TargetType="TextBox">
-            <Setter Property="Padding" Value="10"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="FontSize" Value="25"/>
-            <Setter Property="Margin" Value="5"/>
-        </Style>
-        <Style x:Key="cbItemsStyle" TargetType="ComboBoxItem">
-            <Setter Property="FontSize" Value="25"/>
-        </Style>
+        <Style TargetType="TextBlock" BasedOn="{StaticResource pagesTextBlock}"/>
+        <Style TargetType="TextBox" BasedOn="{StaticResource pagesTextBox}"/>
     </Page.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
-        <ListBox Name="lbDonations" Grid.Column="0" SelectionChanged="lbDonations_SelectionChanged"/>
+        <ListBox Name="lbLocations" Grid.Column="0" SelectionChanged="lbLocations_SelectionChanged"/>
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="5*"/>
@@ -53,19 +41,11 @@
                 </Grid.RowDefinitions>
                 <TextBlock Text="ID" Grid.Row="0" Grid.Column="0"/>
                 <TextBox Name="tbId" IsEnabled="False" Grid.Row="0" Grid.Column="1"/>
-                <TextBlock Text="Donator" Grid.Row="1" Grid.Column="0"/>
-                <ComboBox Name="cbDonators" Grid.Row="1" Grid.Column="1" Margin="5" Padding="0">
-                    <ComboBox.ItemContainerStyle>
-                        <Style TargetType="ComboBoxItem" BasedOn="{StaticResource cbItemsStyle}"/>
-                    </ComboBox.ItemContainerStyle>
-                </ComboBox>
-                <TextBlock Text="Donation event" Grid.Row="2" Grid.Column="0"/>
-                <ComboBox Name="cbDonationEvents" Grid.Row="2" Grid.Column="1" Margin="5" Padding="0">
-                    <ComboBox.ItemContainerStyle>
-                        <Style TargetType="ComboBoxItem" BasedOn="{StaticResource cbItemsStyle}"/>
-                    </ComboBox.ItemContainerStyle>
-                </ComboBox>
-                <TextBlock Name="tbResStatus" Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="2"/>
+                <TextBlock Text="Name" Grid.Row="1" Grid.Column="0"/>
+                <TextBox Name="tbName" Grid.Row="1" Grid.Column="1"/>
+                <TextBlock Text="Description" Grid.Row="2" Grid.Column="0"/>
+                <TextBox Name="tbDescription" VerticalContentAlignment="Top" Grid.Row="2" Grid.Column="1"  Grid.RowSpan="2" AcceptsReturn="True" TextWrapping="Wrap"/>
+                <TextBlock Name="tbResStatus" Grid.Row="10" Grid.Column="0"/>
             </Grid>
             <Grid Grid.Row="1">
                 <WrapPanel Name="wp">

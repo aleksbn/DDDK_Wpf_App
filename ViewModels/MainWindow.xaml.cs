@@ -52,7 +52,7 @@ namespace DDDK_Wpf
             timer.Start();
         }
 
-        private async void resendCredentials(object? sender, ElapsedEventArgs e)
+        private async void resendCredentials(object sender, ElapsedEventArgs e)
         {
             var response = await UsersDAL.Login(store.Username, store.Password);
             var result = JsonSerializer.Deserialize<LoginResponseDTO>(response);
@@ -71,10 +71,7 @@ namespace DDDK_Wpf
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("Do you really want to leave the app?", "Alert!", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-            {
-                Close();
-            }
+            Close();
         }
 
         private void lbOptions_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -94,7 +91,7 @@ namespace DDDK_Wpf
 
         private static void MainWindow_Closing(object sender, CancelEventArgs e)
         {
-            if (MessageBox.Show("Do you really want to leave the app?", "Alert!", MessageBoxButton.YesNo) == MessageBoxResult.No)
+            if (MessageBox.Show("You are about to leave the app. Do you want to proceed?", "Closing the app...", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
             {
                 e.Cancel = true;
             }

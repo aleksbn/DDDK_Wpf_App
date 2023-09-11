@@ -9,22 +9,11 @@
       Loaded="Page_Loaded"
       Title="DonatorsPage">
     <Page.Resources>
-        <Style TargetType="TextBlock">
+        <Style TargetType="TextBlock" BasedOn="{StaticResource pagesTextBlock}">
             <Setter Property="Margin" Value="15"/>
-            <Setter Property="FontSize" Value="25"/>
         </Style>
-        <Style TargetType="TextBox">
-            <Setter Property="Padding" Value="10"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="FontSize" Value="25"/>
-            <Setter Property="Margin" Value="5"/>
-        </Style>
-        <Style x:Key="cbItemsStyle" TargetType="ComboBoxItem">
-            <Setter Property="FontSize" Value="25"/>
-        </Style>
-        <Style x:Key="btnStyle" TargetType="Button">
-            <Setter Property="FontSize" Value="25"/>
-        </Style>
+        <Style TargetType="TextBox" BasedOn="{StaticResource pagesTextBox}"/>
+        <Style TargetType="ComboBoxItem" BasedOn="{StaticResource cbItemsStyle}"/>
     </Page.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -69,11 +58,7 @@
                 <TextBlock Text="Phone Number" Grid.Row="6" Grid.Column="0"/>
                 <TextBox Name="tbPhoneNumber" Grid.Row="6" Grid.Column="1"/>
                 <TextBlock Text="Blood Type" Grid.Row="7" Grid.Column="0"/>
-                <ComboBox Name="cbBloodTypes" Grid.Row="7" Grid.Column="1" Margin="5" Padding="0">
-                    <ComboBox.ItemContainerStyle>
-                        <Style TargetType="ComboBoxItem" BasedOn="{StaticResource cbItemsStyle}"/>
-                    </ComboBox.ItemContainerStyle>
-                </ComboBox>
+                <ComboBox Name="cbBloodTypes" Grid.Row="7" Grid.Column="1" Margin="5" Padding="0"/>
                 <TextBlock Text="Previous Donations" Grid.Row="8" Grid.Column="0"/>
                 <TextBox Name="tbPreviousDonations" Grid.Row="8" Grid.Column="1"/>
                 <TextBlock Name="tbResStatus" Grid.Row="10" Grid.Column="0"/>

@@ -9,19 +9,12 @@
       Title="UsersPage"
       Loaded="Page_Loaded">
     <Page.Resources>
-        <Style TargetType="TextBlock">
+        <Style TargetType="TextBlock" BasedOn="{StaticResource pagesTextBlock}">
             <Setter Property="Margin" Value="15"/>
-            <Setter Property="FontSize" Value="25"/>
         </Style>
-        <Style TargetType="TextBox">
-            <Setter Property="Padding" Value="10"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="FontSize" Value="25"/>
-            <Setter Property="Margin" Value="5"/>
-        </Style>
-        <Style x:Key="cbItemsStyle" TargetType="ComboBoxItem">
-            <Setter Property="FontSize" Value="25"/>
-        </Style>
+        <Style TargetType="TextBox" BasedOn="{StaticResource pagesTextBox}"/>
+        <Style TargetType="PasswordBox" BasedOn="{StaticResource pagesPasswordBox}"/>
+        <Style TargetType="ComboBoxItem" BasedOn="{StaticResource cbItemsStyle}"/>
     </Page.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -54,11 +47,7 @@
                 <TextBlock Text="ID" Grid.Row="0" Grid.Column="0"/>
                 <TextBox Name="tbId" IsEnabled="False" Grid.Row="0" Grid.Column="1"/>
                 <TextBlock Text="Role" Grid.Row="1" Grid.Column="0"/>
-                <ComboBox IsEnabled="False" Name="cbRoles" Grid.Row="1" Grid.Column="1" Margin="5">
-                    <ComboBox.ItemContainerStyle>
-                        <Style TargetType="ComboBoxItem" BasedOn="{StaticResource cbItemsStyle}"/>
-                    </ComboBox.ItemContainerStyle>
-                </ComboBox>
+                <ComboBox IsEnabled="False" Name="cbRoles" Grid.Row="1" Grid.Column="1" Margin="5"/>
                 <TextBlock Text="Email" Grid.Row="2" Grid.Column="0"/>
                 <TextBox Name="tbEmail" Grid.Row="2" Grid.Column="1"/>
                 <TextBlock Name="tblEmailConfirm" Text="Email confirmation" Visibility="Hidden" Grid.Row="3" Grid.Column="0"/>
@@ -73,8 +62,8 @@
                 <WrapPanel Name="wp">
                     <Button Name="btnNew" Click="btnNew_Click" Content="New" Width="100" Height="{Binding ActualHeight, ElementName=wp}" Margin="25 0"/>
                     <Button Name="btnSave" Click="btnSave_Click" Content="Save" Width="100" Margin="25 0" IsEnabled="False"/>
-                    <Button Name="btnEdit" Click="btnEdit_Click" Content="Edit" Width="100" Margin="25 0"/>
-                    <Button Name="btnDelete" Click="btnDelete_Click" Content="Delete" Width="100" Margin="25 0"/>
+                    <Button Name="btnEdit" Click="btnEdit_Click" Content="Edit" Width="100" Margin="25 0" IsEnabled="False"/>
+                    <Button Name="btnDelete" Click="btnDelete_Click" Content="Delete" Width="100" Margin="25 0" IsEnabled="False"/>
                 </WrapPanel>
             </Grid>
         </Grid>

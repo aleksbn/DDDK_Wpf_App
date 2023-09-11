@@ -13,6 +13,25 @@ namespace DDDK_Wpf.Warehouse
 {
     internal static class UsersDAL
     {
+        public async static Task<string> RegisterUser(RegisterUserDTO user, Store store)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", store.Token);
+                var data = JsonSerializer.Serialize(user);
+                HttpContent content = new StringContent(data, Encoding.UTF8, "application/json");
+                var response = await client.PostAsync("https://localhost:7056/api/account/register", content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return "Done";
+                }
+                else
+                {
+                    return await response.Content.ReadAsStringAsync();
+                }
+            }
+        }
         public static async Task<string> Login(string username, string pass)
         {
             using (var client = new HttpClient())
@@ -37,14 +56,13 @@ namespace DDDK_Wpf.Warehouse
 
                     return await response.Content.ReadAsStringAsync();
                 }
-                catch (Exception x)
+                catch (Exception)
                 {
                     MessageBox.Show("Wrong username or password!", "Bad login data", MessageBoxButton.OK, MessageBoxImage.Error);
                     return "Error";
                 }
             }
         }
-
         public async static Task<string> GetUsers(Store store)
         {
             using (HttpClient client = new HttpClient())
@@ -65,45 +83,6 @@ namespace DDDK_Wpf.Warehouse
                 }
             }
         }
-
-        public async static Task<string> DeleteUser(string id, Store store)
-        {
-            using (HttpClient client = new HttpClient())
-            {
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", store.Token);
-                var response = await client.DeleteAsync("https://localhost:7056/api/account/?id=" + id);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    return "Done";
-                }
-                else
-                {
-                    return await response.Content.ReadAsStringAsync();
-                }
-            }
-        }
-
-        public async static Task<string> RegisterUser(RegisterUserDTO user, Store store)
-        {
-            using (HttpClient client = new HttpClient())
-            {
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", store.Token);
-                var data = JsonSerializer.Serialize(user);
-                HttpContent content = new StringContent(data, Encoding.UTF8, "application/json");
-                var response = await client.PostAsync("https://localhost:7056/api/account/register", content);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    return "Done";
-                }
-                else
-                {
-                    return await response.Content.ReadAsStringAsync();
-                }
-            }
-        }
-
         public async static Task<string> UpdateUser(UpdateUserDTO user, Store store)
         {
             using (HttpClient client = new HttpClient())
@@ -112,6 +91,23 @@ namespace DDDK_Wpf.Warehouse
                 var data = JsonSerializer.Serialize(user);
                 HttpContent content = new StringContent(data, Encoding.UTF8, "application/json");
                 var response = await client.PutAsync("https://localhost:7056/api/account/", content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return "Done";
+                }
+                else
+                {
+                    return await response.Content.ReadAsStringAsync();
+                }
+            }
+        }
+        public async static Task<string> DeleteUser(string id, Store store)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", store.Token);
+                var response = await client.DeleteAsync("https://localhost:7056/api/account/?id=" + id);
 
                 if (response.IsSuccessStatusCode)
                 {

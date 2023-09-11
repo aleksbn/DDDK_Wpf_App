@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace DDDK_Wpf.Pages
 {
@@ -77,9 +78,6 @@ namespace DDDK_Wpf.Pages
         {
             await DonationEventsDAL.GetDonationEvents(_store);
             lbDonationEvents.SelectedIndex = -1;
-            lbDonationEvents.ItemsSource = null;
-            lbDonationEvents.ItemsSource = _store.DonationEvents;
-
         }
 
         private async void lbDonationEvents_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -156,7 +154,7 @@ namespace DDDK_Wpf.Pages
 
         private async Task ChangeData()
         {
-            if (Validate())
+            if (ValidateInputs())
             {
                 if (mode == "new")
                 {
@@ -253,19 +251,18 @@ namespace DDDK_Wpf.Pages
             }
         }
 
-        private bool Validate()
+        private bool ValidateInputs()
         {
-            if (!DataCheckers.IsDate(tbDate.Text))
-            {
-                MessageBox.Show("Date of the event must be in DD.MM.YYYY format!", "Error in validation");
-                return false;
-            }
-            if (string.IsNullOrWhiteSpace(tbDescription.Text))
-            {
-                MessageBox.Show("You must enter the event's description!", "Error in validation");
-                return false;
-            }
+            if (ValidationHelper.ValidateElement(tbDate, "Date of the event must be in DD.MM.YYYY format!", ValidationType.Date)) return false;
+            if (ValidationHelper.ValidateElement(tbDescription, "You must enter the event's description!", ValidationType.Text)) return false;
             return true;
+        }
+
+        private void TextBox_edited(object sender, EventArgs e)
+        {
+            var element = (TextBox)sender;
+            element.BorderThickness = new Thickness(1);
+            element.TextChanged -= TextBox_edited;
         }
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)

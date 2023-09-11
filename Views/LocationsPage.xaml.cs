@@ -1,4 +1,5 @@
 ﻿using DDDK_Wpf.DTOs;
+using DDDK_Wpf.Helpers;
 using DDDK_Wpf.Warehouse;
 using System.Threading.Tasks;
 using System.Windows;
@@ -44,8 +45,6 @@ namespace DDDK_Wpf.Pages
         {
             await LocationsDAL.GetLocations(_store);
             lbLocations.SelectedIndex = -1;
-            lbLocations.ItemsSource = null;
-            lbLocations.ItemsSource = _store.Locations;
         }
 
         private void ToggleLock(bool into)
@@ -97,7 +96,7 @@ namespace DDDK_Wpf.Pages
 
         private async Task ChangeData()
         {
-            if (Validate())
+            if (ValidateInputs())
             {
                 if (mode == "new")
                 {
@@ -146,18 +145,10 @@ namespace DDDK_Wpf.Pages
             }
         }
 
-        private bool Validate()
+        private bool ValidateInputs()
         {
-            if(string.IsNullOrWhiteSpace(tbDescription.Text))
-            {
-                MessageBox.Show("You must enter the location's description!", "Error in validation");
-                return false;
-            }
-            if(string.IsNullOrWhiteSpace(tbName.Text))
-            {
-                MessageBox.Show("You must enter the location's name!", "Error in validation");
-                return false;
-            }
+            if (ValidationHelper.ValidateElement(tbDescription, "You must enter the location's description!", ValidationType.Text)) return false;
+            if (ValidationHelper.ValidateElement(tbName, "You must enter the location's name!", ValidationType.Text)) return false;
             return true;
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using System.Windows;
 
 namespace DDDK_Wpf.Helpers
 {
@@ -23,6 +24,14 @@ namespace DDDK_Wpf.Helpers
         public static bool IsPassword(string password)
         {
             return Regex.IsMatch(password, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$");
+        }
+
+        public static bool IsPositiveNumber(string number)
+        {
+            int x;
+            if (int.TryParse(number, out x) && x >= 0) 
+                return true;
+            return false;
         }
     }
 }

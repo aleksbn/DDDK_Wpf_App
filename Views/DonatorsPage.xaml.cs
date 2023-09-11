@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace DDDK_Wpf.Pages
 {
@@ -66,8 +67,6 @@ namespace DDDK_Wpf.Pages
         {
             await DonatorsDAL.GetDonators(_store);
             lbDonators.SelectedIndex = -1;
-            lbDonators.ItemsSource = null;
-            lbDonators.ItemsSource = _store.Donators;
         }
 
         private void lbDonators_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -126,7 +125,7 @@ namespace DDDK_Wpf.Pages
 
         private async Task ChangeData()
         {
-            if (Validate())
+            if (ValidateInputs())
             {
                 if(mode == "new")
                 {
@@ -191,46 +190,15 @@ namespace DDDK_Wpf.Pages
             }
         }
 
-        private bool Validate()
+        private bool ValidateInputs()
         {
-            if (string.IsNullOrWhiteSpace(tbFirstName.Text))
-            {
-                MessageBox.Show("You must enter the donator's first name!", "Error in validation");
-                return false;
-            }
-            if (string.IsNullOrWhiteSpace(tbLastName.Text))
-            {
-                MessageBox.Show("You must enter the donator's last name!", "Error in validation");
-                return false;
-            }
-            if (string.IsNullOrWhiteSpace(tbAddress.Text))
-            {
-                MessageBox.Show("You must enter the donator's address!", "Error in validation");
-                return false;
-            }
-            if (!DataCheckers.IsPhoneNumber(tbPhoneNumber.Text))
-            {
-                MessageBox.Show("You must enter the donator's phone number! The number consists only of numbers and possibly signs +, - and /.", "Error in validation");
-                return false;
-            }
-            if (!DataCheckers.IsEmail(tbEmail.Text))
-            {
-                MessageBox.Show("You must enter the donator's email as the proper email address!", "Error in validation");
-                return false;
-            }
-            int x;
-            if (!int.TryParse(tbPreviousDonations.Text, out x) && x <= 0)
-            {
-                MessageBox.Show("Previous donations must be zero or greather than zero.", "Error in validation");
-                return false;
-            }
-
-            if (!DataCheckers.IsDate(tbBirthDate.Text))
-            {
-                MessageBox.Show("Date of birth must be in DD.MM.YYYY format!", "Error in validation");
-                return false;
-            }
-
+            if (ValidationHelper.ValidateElement(tbFirstName, "You must enter the donator's first name!", ValidationType.Text)) return false;
+            if (ValidationHelper.ValidateElement(tbLastName, "You must enter the donator's last name!", ValidationType.Text)) return false;
+            if (ValidationHelper.ValidateElement(tbEmail, "You must enter a propper email address.", ValidationType.Email)) return false;
+            if (ValidationHelper.ValidateElement(tbBirthDate, "Date of birth must be in DD.MM.YYYY format!", ValidationType.Date)) return false;
+            if (ValidationHelper.ValidateElement(tbAddress, "You must enter the donator's address!", ValidationType.Text)) return false;
+            if (ValidationHelper.ValidateElement(tbPhoneNumber, "You must enter the donator's phone number! The number consists only of numbers and possibly signs +, - and /.", ValidationType.PhoneNumber)) return false;
+            if (ValidationHelper.ValidateElement(tbPreviousDonations, "Previous donations must be zero or greather than zero.", ValidationType.PositiveNumber)) return false;
             return true;
         }
 

@@ -9,21 +9,14 @@
       Title="SearchPage"
     xmlns:System="clr-namespace:System;assembly=System.Runtime">
     <Page.Resources>
-        <Style TargetType="TextBlock">
+        <Style TargetType="TextBlock" BasedOn="{StaticResource pagesTextBlock}">
             <Setter Property="Margin" Value="15 0"/>
-            <Setter Property="FontSize" Value="25"/>
         </Style>
-        <Style TargetType="TextBox">
-            <Setter Property="Padding" Value="10"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="FontSize" Value="25"/>
-            <Setter Property="Margin" Value="5"/>
-        </Style>
+        <Style TargetType="TextBox" BasedOn="{StaticResource pagesTextBox}"/>
         <Style x:Key="cbStyle" TargetType="ComboBox">
             <Setter Property="VerticalContentAlignment" Value="Center"/>
         </Style>
-        <Style x:Key="cbItemsStyle" TargetType="ComboBoxItem">
-            <Setter Property="FontSize" Value="25"/>
+        <Style TargetType="ComboBoxItem" BasedOn="{StaticResource cbItemsStyle}">
             <Setter Property="Padding" Value="20"/>
         </Style>
     </Page.Resources>
@@ -40,11 +33,7 @@
                     </Grid.ColumnDefinitions>
                     <StackPanel Grid.Column="0">
                         <TextBlock Text="Select blood type" FontSize="20" HorizontalAlignment="Center"/>
-                        <ComboBox Name="cbBloodTypes" Margin="10 0" Height="35" SelectionChanged="cbBloodTypes_SelectionChanged">
-                            <ComboBox.ItemContainerStyle>
-                                <Style TargetType="ComboBoxItem" BasedOn="{StaticResource cbItemsStyle}"/>
-                            </ComboBox.ItemContainerStyle>
-                        </ComboBox>
+                        <ComboBox Name="cbBloodTypes" Margin="10 0" Height="35" SelectionChanged="cbBloodTypes_SelectionChanged"/>
                         <TextBlock Text="Donating availability" Margin="0 15" FontSize="20" HorizontalAlignment="Center"/>
                         <Viewbox Height="24" HorizontalAlignment="Left" Margin="10 0">
                             <CheckBox Click="cbAvailable_Click" Content="Available ones" Name="cbAvailable"/>
