@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="DDDK_Wpf.Views.Controls.LocationControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DDDK_Wpf.Views.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="60" d:DesignWidth="180">
+    <Grid>
+        <StackPanel Margin="5">
+            <TextBlock x:Name="tbLocationName" Margin="0" Text="Location Name" FontSize="20" FontWeight="Bold"/>
+            <TextBlock x:Name="tbLocationDescription" Margin="0" Text="Description" FontSize="15" Foreground="DarkBlue"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -4,10 +4,11 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:DDDK_Wpf.Pages"
+      xmlns:uc="clr-namespace:DDDK_Wpf.Views.Controls"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800" Margin="20"
       Loaded="Page_Loaded"
-      Title="DonatorsPage">
+      Title="Donators Page">
     <Page.Resources>
         <Style TargetType="TextBlock" BasedOn="{StaticResource pagesTextBlock}">
             <Setter Property="Margin" Value="15"/>
@@ -20,7 +21,18 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
-        <ListBox Name="lbDonators" Grid.Column="0" SelectionChanged="lbDonators_SelectionChanged"/>
+        <ListBox Name="lbDonators" Grid.Column="0" SelectionChanged="lbDonators_SelectionChanged">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                </Style>
+            </ListBox.ItemContainerStyle>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <uc:DonatorControl Donator="{Binding}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="5*"/>

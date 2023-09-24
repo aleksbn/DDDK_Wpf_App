@@ -22,6 +22,12 @@ namespace DDDK_Wpf.Pages
             ToggleLock(false);
         }
 
+        private void ToggleLock(bool into)
+        {
+            tbName.IsEnabled = into;
+            tbDescription.IsEnabled = into;
+        }
+        
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             if (_store.Locations == null)
@@ -45,12 +51,6 @@ namespace DDDK_Wpf.Pages
         {
             await LocationsDAL.GetLocations(_store);
             lbLocations.SelectedIndex = -1;
-        }
-
-        private void ToggleLock(bool into)
-        {
-            tbName.IsEnabled = into;
-            tbDescription.IsEnabled = into;
         }
 
         private void lbLocations_SelectionChanged(object sender, SelectionChangedEventArgs e)
