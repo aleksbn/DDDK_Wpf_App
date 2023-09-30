@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace DDDK_Wpf.Pages
@@ -38,6 +39,7 @@ namespace DDDK_Wpf.Pages
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            Mouse.OverrideCursor = Cursors.Wait;
             await DonatorsDAL.GetDonators(_store);
             foreach (var donator in _store.Donators)
             {
@@ -72,6 +74,7 @@ namespace DDDK_Wpf.Pages
                 btnEdit.IsEnabled = false;
                 ToggleLock(true);
             }
+            Mouse.OverrideCursor = Cursors.Arrow;
         }
 
         private async Task ForceReload()

@@ -64,6 +64,7 @@ namespace DDDK_Wpf
 
         private void btnLogout_Click(object sender, RoutedEventArgs e)
         {
+            store.LoggingOut = true;
             LoginWindow login = new LoginWindow(this.store);
             login.Show();
             Close();
@@ -89,11 +90,14 @@ namespace DDDK_Wpf
             }
         }
 
-        private static void MainWindow_Closing(object sender, CancelEventArgs e)
+        private void MainWindow_Closing(object sender, CancelEventArgs e)
         {
-            if (MessageBox.Show("You are about to leave the app. Do you want to proceed?", "Closing the app...", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
+            if (!store.LoggingOut)
             {
-                e.Cancel = true;
+                if (MessageBox.Show("You are about to leave the app. Do you want to proceed?", "Closing the app...", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
+                {
+                    e.Cancel = true;
+                }
             }
         }
     }

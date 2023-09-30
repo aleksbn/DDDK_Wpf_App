@@ -33,11 +33,22 @@ namespace DDDK_Wpf
             Login();
         }
 
+        private void toggleLock(bool isLocked)
+        {
+            tbPassword.IsEnabled = isLocked;
+            tbUsername.IsEnabled = isLocked;
+            btnLogin.IsEnabled = isLocked;
+        }
+
         private async void Login()
         {
+            Mouse.OverrideCursor = Cursors.Wait;
+            toggleLock(false);
             var response = await UsersDAL.Login(tbUsername.Text, tbPassword.Password);
             if (response == "Error")
             {
+                Mouse.OverrideCursor = Cursors.Arrow;
+                toggleLock(true);
                 return;
             }
             var result = JsonSerializer.Deserialize<LoginResponseDTO>(response);
@@ -47,6 +58,9 @@ namespace DDDK_Wpf
                 store.Role = result.role[0];
                 store.Username = tbUsername.Text;
                 store.Password = tbPassword.Password;
+                store.LoggingOut = false;
+                Mouse.OverrideCursor = Cursors.Arrow;
+                toggleLock(true);
                 MainWindow mainWindow = new MainWindow(store);
                 mainWindow.Show();
                 Close();

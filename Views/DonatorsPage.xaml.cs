@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace DDDK_Wpf.Pages
 {
@@ -38,7 +39,8 @@ namespace DDDK_Wpf.Pages
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            if(_store.BloodTypes == null)
+            Mouse.OverrideCursor = Cursors.Wait;
+            if (_store.BloodTypes == null)
             {
                 await BloodTypesDAL.GetBloodTypes(_store);
             }
@@ -60,6 +62,7 @@ namespace DDDK_Wpf.Pages
                 btnEdit.IsEnabled = false;
                 ToggleLock(true);
             }
+            Mouse.OverrideCursor = Cursors.Arrow;
         }
 
         private async Task ForceReload()

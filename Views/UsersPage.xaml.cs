@@ -1,12 +1,10 @@
 ﻿using DDDK_Wpf.DTOs;
 using DDDK_Wpf.Helpers;
 using DDDK_Wpf.Warehouse;
-using System.Diagnostics.Metrics;
-using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Xml.Linq;
+using System.Windows.Input;
 
 namespace DDDK_Wpf.Pages
 {
@@ -45,6 +43,7 @@ namespace DDDK_Wpf.Pages
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            Mouse.OverrideCursor = Cursors.Wait;
             cbRoles.Items.Add(new RoleDTO() { RoleName = "Administrator"});
             cbRoles.Items.Add(new RoleDTO() { RoleName = "Moderator" });
             if (_store.Users == null)
@@ -53,6 +52,7 @@ namespace DDDK_Wpf.Pages
             }
             lbUsers.ItemsSource = _store.Users;
             lbUsers.SelectedIndex = -1;
+            Mouse.OverrideCursor = Cursors.Arrow;
         }
 
         private async Task ForceReload()

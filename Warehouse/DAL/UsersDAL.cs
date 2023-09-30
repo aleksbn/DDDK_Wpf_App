@@ -33,18 +33,17 @@ namespace DDDK_Wpf.Warehouse
                         Encoding.UTF8,
                         "application/json");
 
-                using HttpResponseMessage response = await client.PostAsync(link, jsonContent);
-
-                var jsonresponse = await client.GetAsync(link);
                 try
                 {
+                    HttpResponseMessage response = await client.PostAsync(link, jsonContent);
+                    var jsonresponse = await client.GetAsync(link);
                     response.EnsureSuccessStatusCode();
 
                     return await response.Content.ReadAsStringAsync();
                 }
-                catch (Exception)
+                catch (Exception x)
                 {
-                    MessageBox.Show("Wrong username or password!", "Bad login data", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"There is something wrong with your login data, or it's a network orented problems.\n\nError: {x.Message}", "Logging in problems", MessageBoxButton.OK, MessageBoxImage.Error);
                     return "Error";
                 }
             }
