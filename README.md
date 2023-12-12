@@ -1,4 +1,4 @@
-# DDDK WP frontend app
+# DDDK WPF frontend app
 Hello and welcome to the instruction manual for the DDDK application! This app is about managing data for the bloood donors club. It's managind blood donations, events, location of the events etc, together with data about the donors. App is not hosted anywhere, but there are others that are, and you can check them out at my portfolio site at [https://aleksandar-matic.web.app/skillsandprojects](https://aleksandar-matic.web.app/skillsandprojects). Once you open up the page, scroll a little bit down and check those with web page links.
 
 # Backend
