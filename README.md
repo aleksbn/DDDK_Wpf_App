@@ -4,7 +4,7 @@ Hello and welcome to the instruction manual for the DDDK application! This app i
 # Backend
 Backend is actually an asp.net web api made in C#. Database is already included inside of a project. 
 1. Download code from [backend repo](https://github.com/aleksbn/dddk-backend-asp.net).
-2. Next step is having visual studio. In case you don't have one, head down to the [VS download page](https://visualstudio.microsoft.com/downloads/), download Community version and install it on your computer. If you already have it, you can skip this step.
+2. Next step is getting visual studio. In case you don't have one, head down to the [VS download page](https://visualstudio.microsoft.com/downloads/), download Community version and install it on your computer. If you already have it, you can skip this step.
 3. You need .net 7 for this app to be able to run. If you don't have it, go to the [.net 7 download page](https://dotnet.microsoft.com/en-us/download/dotnet/7.0), download version for your OS and install it.
 
 # Frontend
